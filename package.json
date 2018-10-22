@@ -23,17 +23,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com//cytoscape-all-paths.git"
+    "url": "https://github.com/daniel-dx/cytoscape-all-paths.git"
   },
   "keywords": [
     "cytoscape",
-    "cytoscape-extension"
+    "cytoscape-extension",
+    "all paths"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com//cytoscape-all-paths/issues"
+    "url": "https://github.com/daniel-dx/cytoscape-all-paths/issues"
   },
-  "homepage": "https://github.com//cytoscape-all-paths",
+  "homepage": "https://github.com/daniel-dx/cytoscape-all-paths",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
