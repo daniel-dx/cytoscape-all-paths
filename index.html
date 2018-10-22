@@ -1,0 +1,112 @@
+<!DOCTYPE>
+
+<html>
+
+<head>
+	<title>cytoscape-all-paths.js demo</title>
+
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+	<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+	<!-- for testing with local version of cytoscape.js -->
+	<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+
+	<script src="cytoscape-all-paths.js"></script>
+
+	<style>
+		body {
+			font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
+			font-size: 14px;
+		}
+
+		#cy {
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 999;
+		}
+
+		h1 {
+			opacity: 0.5;
+			font-size: 1em;
+			font-weight: bold;
+		}
+	</style>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+
+			var cy = window.cy = cytoscape({
+				container: document.getElementById('cy'),
+
+				layout: {
+					name: 'circle'
+				},
+
+				style: [
+					{
+						selector: 'node',
+						style: {
+							'content': 'data(name)'
+						}
+					},
+
+					{
+						selector: 'edge',
+						style: {
+							'curve-style': 'bezier',
+							'target-arrow-shape': 'triangle'
+						}
+					}
+				],
+
+				elements: {
+					nodes: [
+						{ data: { id: 'j', name: 'Jerry' } },
+						{ data: { id: 'e', name: 'Elaine' } },
+						{ data: { id: 'k', name: 'Kramer' } },
+						{ data: { id: 'g', name: 'George' } }
+					],
+					edges: [
+						{ data: { source: 'j', target: 'e' } },
+						{ data: { source: 'e', target: 'k' } },
+						{ data: { source: 'j', target: 'g' } },
+						{ data: { source: 'g', target: 'k' } },
+						{ data: { source: 'g', target: 'e' } },
+					]
+				}
+			});
+
+			// demo your collection ext
+			let allPaths = cy.elements().cytoscapeAllPaths( /* args... */);
+
+			// Usage exampel: Display each path at regular intervals
+			let maxTimes = allPaths.length;
+			let currentTimes = 0;
+			let selectedEles;
+			let interval = setInterval(() => {
+				if (currentTimes === maxTimes) {
+					clearInterval(interval);
+				} else {
+					if (selectedEles) selectedEles.unselect();
+					selectedEles = allPaths[currentTimes];
+					selectedEles.select();
+					currentTimes++;
+				}
+			}, 2000);
+
+		});
+	</script>
+</head>
+
+<body>
+	<h1>cytoscape-all-paths demo</h1>
+
+	<div id="cy"></div>
+
+</body>
+
+</html>
