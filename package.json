@@ -1,8 +1,8 @@
 {
-  "name": "cytoscape-cytoscape-all-paths",
-  "version": "0.0.0",
+  "name": "cytoscape-all-paths",
+  "version": "0.0.1",
   "description": "Get all possible paths",
-  "main": "cytoscape-cytoscape-all-paths.js",
+  "main": "cytoscape-all-paths.js",
   "author": {
     "name": "daniel.xiao",
     "email": "danielwxx@gmail.com"

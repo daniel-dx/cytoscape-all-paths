@@ -1,7 +1,7 @@
 {
-  "name": "cytoscape-cytoscape-all-paths",
+  "name": "cytoscape-all-paths",
   "description": "Get all possible paths",
-  "main": "cytoscape-cytoscape-all-paths.js",
+  "main": "cytoscape-all-paths.js",
   "dependencies": {
     "cytoscape": "^3.2.0"
   },
