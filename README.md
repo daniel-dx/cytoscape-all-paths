@@ -4,7 +4,7 @@ cytoscape-all-paths
 
 ## Description
 
-Get all possible paths ([demo](https://daniel-dx.github.io/cytoscape-all-paths/))
+Get all possible paths ([demo](https://daniel-dx.github.io/cytoscape-all-paths/demo.html))
 
 ## Dependencies
 
