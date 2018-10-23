@@ -1,6 +1,6 @@
 {
   "name": "cytoscape-all-paths",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Get all possible paths",
   "main": "cytoscape-all-paths.js",
   "author": {
