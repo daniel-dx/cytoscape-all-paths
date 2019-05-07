@@ -50,9 +50,12 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 
 ## API
 
-`cy.elements().cytoscapeAllPaths()`
+`cy.elements().cytoscapeAllPaths(options)`
 
 Return all paths, data format is: [ [ node, edge, node, edge, ... ], ... ]
+
+> options
+>  - maxPaths: limit the maximum number of paths. default is -1, means unlimited
 
 
 ## Build targets

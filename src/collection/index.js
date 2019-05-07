@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function({maxPaths = -1} = {}) {
   let eles = this;
   let cy = this.cy();
 
@@ -12,6 +12,9 @@ module.exports = function() {
   });
 
   function traversing(node, preNodes) {
+
+    if (maxPaths >= 0 && allPaths.length >= maxPaths) return;
+
     if (!node) {
       // It's the ending node
       allPaths.push(preNodes);

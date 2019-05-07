@@ -83,7 +83,10 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 
-module.exports = function () {
+module.exports = function (_ref) {
+  var _ref$maxPaths = _ref.maxPaths,
+      maxPaths = _ref$maxPaths === undefined ? -1 : _ref$maxPaths;
+
   var eles = this;
   var cy = this.cy();
 
@@ -97,6 +100,9 @@ module.exports = function () {
   });
 
   function traversing(node, preNodes) {
+
+    if (maxPaths >= 0 && allPaths.length >= maxPaths) return;
+
     if (!node) {
       // It's the ending node
       allPaths.push(preNodes);
