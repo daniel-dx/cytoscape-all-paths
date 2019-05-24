@@ -78,29 +78,25 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-module.exports = function (_ref) {
-  var _ref$maxPaths = _ref.maxPaths,
-      maxPaths = _ref$maxPaths === undefined ? -1 : _ref$maxPaths;
+module.exports = function () {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+      _ref$maxPaths = _ref.maxPaths,
+      maxPaths = _ref$maxPaths === void 0 ? -1 : _ref$maxPaths;
 
   var eles = this;
-  var cy = this.cy();
+  var cy = this.cy(); // 1. Find all root node
 
-  // 1. Find all root node
-  var rootNodes = eles.roots();
+  var rootNodes = eles.roots(); // 2. Start with each root node and traverse all paths
 
-  // 2. Start with each root node and traverse all paths
   var allPaths = []; // [[node, edge, node, edge, ...], ...]
+
   rootNodes.forEach(function (rNode) {
     traversing(rNode, [rNode]);
   });
 
   function traversing(node, preNodes) {
-
     if (maxPaths >= 0 && allPaths.length >= maxPaths) return;
 
     if (!node) {
@@ -110,6 +106,7 @@ module.exports = function (_ref) {
     }
 
     var nextEles = getOutgoers(node);
+
     if (nextEles.length === 0) {
       // It's the ending node
       allPaths.push(preNodes);
@@ -130,7 +127,9 @@ module.exports = function (_ref) {
   function getOutgoers(node) {
     var outgoers = node.outgoers();
     var nextEles = []; // [[node, edge], ...]
+
     var eles = []; // [node, edge]
+
     outgoers.forEach(function (oEle, idx) {
       if (idx % 2 == 0) {
         // even
@@ -150,7 +149,6 @@ module.exports = function (_ref) {
     var pathCollection = cy.collection(pathItem);
     allPathsCollection.push(pathCollection);
   });
-
   return allPathsCollection; // chainability
 };
 
@@ -158,16 +156,14 @@ module.exports = function (_ref) {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+var impl = __webpack_require__(0); // registers the extension on a cytoscape lib ref
 
 
-var impl = __webpack_require__(0);
-
-// registers the extension on a cytoscape lib ref
 var register = function register(cytoscape) {
   if (!cytoscape) {
     return;
   } // can't register if cytoscape unspecified
+
 
   cytoscape('collection', 'cytoscapeAllPaths', impl); // register with cytoscape.js
 };
