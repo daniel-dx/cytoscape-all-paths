@@ -2,7 +2,7 @@ module.exports = function({maxPaths = -1, rootIds = []} = {}) {
   let eles = this;
   let cy = this.cy();
 
-  // 1. Find all root node
+  // 1. Find all root nodes
   let rootNodes = [];
   if (rootIds.length === 0) {
     rootNodes = eles.roots();
