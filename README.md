@@ -56,6 +56,7 @@ Return all paths, data format is: [ [ node, edge, node, edge, ... ], ... ]
 
 > options
 >  - maxPaths: limit the maximum number of paths. default is -1, means unlimited
+>  - rootIds: Manually specify the root(s). if it is empty, will automatically calculate
 
 
 ## Build targets

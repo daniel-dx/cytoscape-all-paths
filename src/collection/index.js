@@ -1,9 +1,14 @@
-module.exports = function({maxPaths = -1} = {}) {
+module.exports = function({maxPaths = -1, rootIds = []} = {}) {
   let eles = this;
   let cy = this.cy();
 
   // 1. Find all root node
-  let rootNodes = eles.roots();
+  let rootNodes = [];
+  if (rootIds.length === 0) {
+    rootNodes = eles.roots();
+  } else {
+    rootNodes = rootIds.map(id => cy.$id(id)).filter(item => item.length > 0);
+  }
 
   // 2. Start with each root node and traverse all paths
   let allPaths = []; // [[node, edge, node, edge, ...], ...]
