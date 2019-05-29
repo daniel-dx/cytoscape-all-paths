@@ -83,12 +83,25 @@ return /******/ (function(modules) { // webpackBootstrap
 module.exports = function () {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref$maxPaths = _ref.maxPaths,
-      maxPaths = _ref$maxPaths === void 0 ? -1 : _ref$maxPaths;
+      maxPaths = _ref$maxPaths === void 0 ? -1 : _ref$maxPaths,
+      _ref$rootIds = _ref.rootIds,
+      rootIds = _ref$rootIds === void 0 ? [] : _ref$rootIds;
 
   var eles = this;
   var cy = this.cy(); // 1. Find all root node
 
-  var rootNodes = eles.roots(); // 2. Start with each root node and traverse all paths
+  var rootNodes = [];
+
+  if (rootIds.length === 0) {
+    rootNodes = eles.roots();
+  } else {
+    rootNodes = rootIds.map(function (id) {
+      return cy.$id(id);
+    }).filter(function (item) {
+      return item.length > 0;
+    });
+  } // 2. Start with each root node and traverse all paths
+
 
   var allPaths = []; // [[node, edge, node, edge, ...], ...]
 
