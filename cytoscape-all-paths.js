@@ -80,15 +80,24 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = function () {
+module.exports = {
+  allPaths: allPaths,
+  allPathsTo: allPathsTo
+};
+
+function allPaths() {
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
       _ref$maxPaths = _ref.maxPaths,
       maxPaths = _ref$maxPaths === void 0 ? -1 : _ref$maxPaths,
       _ref$rootIds = _ref.rootIds,
-      rootIds = _ref$rootIds === void 0 ? [] : _ref$rootIds;
+      rootIds = _ref$rootIds === void 0 ? [] : _ref$rootIds,
+      _ref$directed = _ref.directed,
+      directed = _ref$directed === void 0 ? false : _ref$directed,
+      _ref$target = _ref.target,
+      target = _ref$target === void 0 ? null : _ref$target;
 
   var eles = this;
-  var cy = this.cy(); // 1. Find all root node
+  var cy = this.cy(); // 1. Find all root nodes
 
   var rootNodes = [];
 
@@ -118,7 +127,19 @@ module.exports = function () {
       return;
     }
 
-    var nextEles = getOutgoers(node);
+    if (directed && target !== null && target === node.id()) {
+      // It's the ending node in directed graph
+      allPaths.push(preNodes);
+      return;
+    }
+
+    var nextEles;
+
+    if (!directed) {
+      nextEles = getOutgoers(node);
+    } else {
+      nextEles = getDirectedOutgoers(node, preNodes);
+    }
 
     if (nextEles.length === 0) {
       // It's the ending node
@@ -137,11 +158,52 @@ module.exports = function () {
     }
   }
 
+  function getDirectedOutgoers(node, preNodes) {
+    var outgoers = node.outgoers();
+    var pos = -1;
+
+    var _loop = function _loop(i) {
+      // outgoers is node and node is already inside preNodes (visited)
+      if (i % 2 !== 0 && preNodes.find(function (item) {
+        return item.id() === outgoers[i].id();
+      })) {
+        // save the position
+        pos = i;
+        return "break";
+      }
+    };
+
+    for (var i = 0; i < outgoers.length; i++) {
+      var _ret = _loop(i);
+
+      if (_ret === "break") break;
+    } // delete edge and node
+
+
+    if (pos > -1) outgoers.splice(pos - 1, 2);
+    var nextEles = []; // [[edge, node], ...]
+
+    var eles = []; // [edge, node]
+
+    outgoers.forEach(function (oEle, idx) {
+      if (idx % 2 == 0) {
+        // even
+        eles = [];
+        eles.push(oEle);
+      } else {
+        // odd
+        eles.push(oEle);
+        nextEles.push(eles);
+      }
+    });
+    return nextEles;
+  }
+
   function getOutgoers(node) {
     var outgoers = node.outgoers();
-    var nextEles = []; // [[node, edge], ...]
+    var nextEles = []; // [[edge, node], ...]
 
-    var eles = []; // [node, edge]
+    var eles = []; // [edge, node]
 
     outgoers.forEach(function (oEle, idx) {
       if (idx % 2 == 0) {
@@ -163,7 +225,23 @@ module.exports = function () {
     allPathsCollection.push(pathCollection);
   });
   return allPathsCollection; // chainability
-};
+}
+
+;
+
+function allPathsTo(target, _ref2) {
+  var _ref2$maxPaths = _ref2.maxPaths,
+      maxPaths = _ref2$maxPaths === void 0 ? -1 : _ref2$maxPaths,
+      _ref2$rootIds = _ref2.rootIds,
+      rootIds = _ref2$rootIds === void 0 ? [] : _ref2$rootIds;
+  return allPaths.apply(this, [Object.assign({
+    maxPaths: maxPaths,
+    rootIds: rootIds
+  }, {
+    target: target,
+    directed: true
+  })]);
+}
 
 /***/ }),
 /* 1 */
@@ -178,7 +256,9 @@ var register = function register(cytoscape) {
   } // can't register if cytoscape unspecified
 
 
-  cytoscape('collection', 'cytoscapeAllPaths', impl); // register with cytoscape.js
+  cytoscape('collection', 'cytoscapeAllPaths', impl.allPaths); // register with cytoscape.js
+
+  cytoscape('collection', 'cytoscapeAllPathsTo', impl.allPathsTo);
 };
 
 if (typeof cytoscape !== 'undefined') {

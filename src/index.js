@@ -4,7 +4,8 @@ const impl = require('./collection');
 let register = function( cytoscape ){
   if( !cytoscape ){ return; } // can't register if cytoscape unspecified
 
-  cytoscape( 'collection', 'cytoscapeAllPaths', impl ); // register with cytoscape.js
+  cytoscape( 'collection', 'cytoscapeAllPaths', impl.allPaths ); // register with cytoscape.js
+  cytoscape( 'collection', 'cytoscapeAllPathsTo', impl.allPathsTo)
 };
 
 if( typeof cytoscape !== 'undefined' ){ // expose to global cytoscape (i.e. window.cytoscape)
